@@ -56,7 +56,7 @@ function showListOfTasks() {
         toDoList.innerHTML = newLiTag;
     }
     taskListArray.forEach((element, index) => {
-        newLiTag += `<li><span class="complete-task-icon" onclick="completeTask(${index})"><i class="fa fa-check-square fa-border" aria-hidden="true"></i></span>  ${element}<div class="side-icons"><button class="edit-icon" onclick="editTask(${index} )">Edit</button><span class="delete-icon" onclick="deleteTask(${index})" ><i class="fas fa-trash"></i></span></div></li>`;
+        newLiTag += `<li><div class="complete-task-icon" onclick="completeTask(${index})"><i class="fa fa-check-square fa-border" aria-hidden="true"></i></div>  <div class="element-container">${element}</div><div class="side-icons"><div><button class="edit-icon" onclick="editTask(${index} )">Edit</button></div><div class="delete-icon" onclick="deleteTask(${index})" ><i class="fas fa-trash"></i></div></div></li>`;
         toDoList.innerHTML = newLiTag;
         inputBox.value = "";
 
@@ -107,7 +107,7 @@ function showCompletedTask() {
 
     newLiTag = `<h1>Completed Task</h1>`;
     completeTaskList.forEach((element, index) => {
-        newLiTag += `<li class="completed-task"> ${element}<div class="side-icons"><span class="delete-icon" onclick="deleteCompletedTask(${index})"><i class="fas fa-trash"></i></span></div></li>`;
+        newLiTag += `<li><div class="element-container">${element}</div><div class="complete-list-delete-icon" onclick="deleteCompletedTask(${index})" ><i class="fas fa-trash"></i></div></li>`;
         completedTaskList.innerHTML = newLiTag;
     });
 }

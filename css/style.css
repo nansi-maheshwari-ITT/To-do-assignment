@@ -1,8 +1,11 @@
 body{
     
-    background: linear-gradient(to bottom, #6d9db1 0%, #db82d0 100%);
-    height: 100vh;
+    background: linear-gradient(to bottom, #6d9db1 , #db82d0);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
+
+
 
 .Main-box{
     background-color: white;
@@ -35,7 +38,7 @@ border: 1px solid #ccc;
 
 .input-field .add-button{
     width: 10%;
-    background: linear-gradient(to bottom, #6d9db1 0%, #db82d0 100%);
+    background: linear-gradient(to bottom, #6d9db1 , #db82d0 );
     color: white;
     margin-left: 10px;
     cursor: pointer;
@@ -63,7 +66,7 @@ border: 1px solid #ccc;
 }
 
 .footer button{
-    background: linear-gradient(to bottom, #6d9db1 0%, #db82d0 100%);
+    background: linear-gradient(to bottom, #6d9db1, #db82d0 );
     color: white; 
     cursor: pointer;
     opacity: 0.6;
@@ -94,47 +97,63 @@ ul{
     
 }
 
-.delete-icon{
-    /* display: none; */
+.complete-list-delete-icon{
+    width: 20%;
+   display: flex;
+   justify-content: flex-end;
    color: red;
+   margin-top: 15px;
+
 }
 
-.delete-icon.show-button{
-    display: inline-block;
-    color: #6d9db1;
+.delete-icon{
+    color: red;
 }
+.side-icons{
 
-
-
+    display: flex;
+    justify-content: flex-end;
+    width: 20%;
+ }
 
 .to-do-list li{
-height: 45px;
 line-height: 45px;
 margin-bottom: 8px;
 background: #dad7d7;
 border-radius: 3px;
 padding: 0 15px;
+word-wrap: break-word;
+display: flex;
+flex-direction: row;
+
 }
 .completed-task-list li{
-height: 45px;
-line-height: 45px;
+line-height: 40px;
 border-radius: 3px;
-padding: 0 15px;
+padding: 0 10px;
 margin-bottom: 8px;
 background: #ebe9e9;
+word-wrap: break-word;
+display: flex;
+flex-direction: row;
+}
+
+.to-do-list li .element-container{
+    width: 70%;
+    
+}
+.completed-task-list li .element-container{
+width: 90%;
 text-decoration: line-through;
 }
 
 .complete-task-icon{
-float: left;
+width: 10%;
 }
-.side-icons{
-    display: inline-block;
-    float: right;
-}
+
 .edit-icon{
     margin-right: 8px;
-    background: linear-gradient(to bottom, #6d9db1 0%, #db82d0 100%);
+    background: linear-gradient(to bottom, #6d9db1 , #db82d0 );
     border: none;
     color: white;
     padding: 2px 5px;
@@ -151,7 +170,7 @@ float: left;
     margin-left: 10px;
     border-radius: 3px;
     width: 35%;
-    background: linear-gradient(to bottom, #6d9db1 0%, #db82d0 100%);
+    background: linear-gradient(to bottom, #6d9db1 , #db82d0 );
 }
 
 @media screen and (max-width: 540px) {
@@ -163,5 +182,9 @@ float: left;
         width: 40%;
         font-size: 15px;
         
+    }
+
+    .to-do-list li .element-container{
+        width: 69%;
     }
   }
