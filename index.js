@@ -4,127 +4,125 @@ const deleteAllButton = document.querySelector(".footer button");
 const toDoList = document.querySelector(".to-do-list");
 const completedTaskList = document.querySelector(".completed-task-list");
 const pendingTask = document.querySelector(".footer span");
-const saveButton = document.querySelector(".save-button");
-var taskListArray;
-var completeTaskList;
-var updateindex;
-
-if (localStorage.getItem("Task list")) {
-    taskListArray = JSON.parse(localStorage.getItem("Task list"));
-}
-else {
-    taskListArray = JSON.parse("[]");
-}
-
-if (localStorage.getItem("Completed task")) {
-    completeTaskList = JSON.parse(localStorage.getItem("Completed task"));
-}
-else {
-    completeTaskList = JSON.parse("[]");
-}
-
-
-let userEnteredTask;
-inputBox.onkeyup = () => {
-    userEnteredTask = inputBox.value;
-    if (userEnteredTask.trim() != 0) {
-        addButton.classList.add("active");
-    }
-    else {
-        addButton.classList.remove("active");
-    }
-}
-
-
-addButton.onclick = () => {
-    taskListArray.push(userEnteredTask);
-    localStorage.setItem("Task list", JSON.stringify(taskListArray));
-    showListOfTasks();
+const updateButtton = document.querySelector(".save-button");
+let taskListArray = JSON.parse(localStorage.getItem("Task list"));
+let completeTaskList = JSON.parse(localStorage.getItem("Completed task"));
+let updateIndex;
+let Task;
+inputBox.onkeyup=buttonTransition;
+addButton.onclick=addTask;
+updateButtton.onclick = updateTaskListArray;
+ 
+function buttonTransition() {
+  Task = inputBox.value;
+  if (Task.trim() != 0) {
+    addButton.classList.add("active");
+  } else {
     addButton.classList.remove("active");
+  }
+}
+function addTask() {
+  addToTaskListArray();
+  showListOfTasks();
+  buttonTransition();
+}
+function addToTaskListArray(){
+  taskListArray.push(Task);
+  localStorage.setItem("Task list", JSON.stringify(taskListArray));
 }
 
 function showListOfTasks() {
+  deleteAllButtonTransition();
+  addNewListItem();
+  showPendingTask();
+}
 
-    if (taskListArray.length > 0 || completeTaskList.length > 0) {
-        deleteAllButton.classList.add("active");
-    } else {
-        deleteAllButton.classList.remove("active");
-    }
+function showPendingTask() {
+  pendingTask.innerHTML = `You have ${taskListArray.length} pending task.`;
+}
 
-    let newLiTag = "";
-    if (taskListArray.length == 0) {
-        toDoList.innerHTML = newLiTag;
-    }
-    taskListArray.forEach((element, index) => {
-        newLiTag += `<li><div class="complete-task-icon" onclick="completeTask(${index})"><i class="fa fa-check-square fa-border" aria-hidden="true"></i></div>  <div class="element-container">${element}</div><div class="side-icons"><div><button class="edit-icon" onclick="editTask(${index} )">Edit</button></div><div class="delete-icon" onclick="deleteTask(${index})" ><i class="fas fa-trash"></i></div></div></li>`;
-        toDoList.innerHTML = newLiTag;
-        inputBox.value = "";
+function addNewListItem() {
+  let newLiTag = "";
+  if (taskListArray.length == 0) {
+    toDoList.innerHTML = newLiTag;
+  }
+  taskListArray.forEach((element, index) => {
+    newLiTag += `<li><div class="complete-task-icon" onclick="markTaskCompleted(${index})"><i class="fa fa-check-square fa-border" aria-hidden="true"></i></div>  <div class="element-container">${element}</div><div class="side-icons"><div><button class="edit-icon" onclick="editTask(${index} )">Edit</button></div><div class="delete-icon" onclick="deleteTask(${index})" ><i class="fas fa-trash"></i></div></div></li>`;
+    toDoList.innerHTML = newLiTag;
+    inputBox.value = "";
+  });
+}
 
-    });
-    pendingTask.innerHTML = `You have ${taskListArray.length} pending task.`
+function deleteAllButtonTransition() {
+  if (taskListArray.length > 0 || completeTaskList.length > 0) {
+    deleteAllButton.classList.add("active");
+  } else {
+    deleteAllButton.classList.remove("active");
+  }
 }
 
 function editTask(index) {
-    addButton.style.display = "none";
-    saveButton.style.display = "block";
-    updateindex = index;
-    inputBox.value = taskListArray[index];
-
+  updateButttonTransition();
+ updateIndex = index;
+  inputBox.value = taskListArray[index];
 }
 
+function updateButttonTransition(){
+  addButton.style.display = "none";
+  updateButtton.style.display = "block";
+}
 
-saveButton.onclick = () => {
-    addButton.style.display = "block";
-    addButton.classList.remove("active");
-    saveButton.style.display = "none";
-
-    taskListArray[updateindex] = inputBox.value;
-    localStorage.setItem("Task list", JSON.stringify(taskListArray));
-    showListOfTasks();
-
+function updateTaskListArray(){
+  addButtonTransition();
+  taskListArray[updateIndex] = inputBox.value;
+  localStorage.setItem("Task list", JSON.stringify(taskListArray));
+  showListOfTasks();
+}
+function addButtonTransition(){
+  addButton.style.display = "block";
+  addButton.classList.remove("active");
+  updateButtton.style.display = "none";
 }
 
 function deleteTask(index) {
-    taskListArray.splice(index, 1);
-    localStorage.setItem("Task list", JSON.stringify(taskListArray));
-    showListOfTasks();
+  taskListArray.splice(index, 1);
+  localStorage.setItem("Task list", JSON.stringify(taskListArray));
+  showListOfTasks();
 }
 
-
-
-function completeTask(index) {
-    completeTaskList.push(taskListArray[index]);
-    localStorage.setItem("Completed task", JSON.stringify(completeTaskList));
-    showCompletedTask();
-    deleteTask(index);
-
+function markTaskCompleted(index) {
+  completeTaskList.push(taskListArray[index]);
+  localStorage.setItem("Completed task", JSON.stringify(completeTaskList));
+  showCompletedTask();
+  deleteTask(index);
 }
 
 function showCompletedTask() {
-    if (completeTaskList.length == 0) {
-        completedTaskList.innerHTML = "";
-    }
-
-    newLiTag = `<h1>Completed Task</h1>`;
-    completeTaskList.forEach((element, index) => {
-        newLiTag += `<li><div class="element-container">${element}</div><div class="complete-list-delete-icon" onclick="deleteCompletedTask(${index})" ><i class="fas fa-trash"></i></div></li>`;
-        completedTaskList.innerHTML = newLiTag;
-    });
+  if (completeTaskList.length == 0) {
+    completedTaskList.innerHTML = "";
+  }
+  newLiTag = `<h1>Completed Task</h1>`;
+  completeTaskList.forEach((element, index) => {
+    newLiTag += `<li><div class="element-container">${element}</div><div class="complete-list-delete-icon" onclick="deleteCompletedTask(${index})" ><i class="fas fa-trash"></i></div></li>`;
+    completedTaskList.innerHTML = newLiTag;
+  });
 }
 
 function deleteCompletedTask(index) {
-    completeTaskList.splice(index, 1);
-    localStorage.setItem("Completed task", JSON.stringify(completeTaskList));
-    showCompletedTask();
+  completeTaskList.splice(index, 1);
+  localStorage.setItem("Completed task", JSON.stringify(completeTaskList));
+  showCompletedTask();
 }
-
 
 deleteAllButton.onclick = () => {
-    taskListArray = [];
-    completeTaskList = [];
-    localStorage.setItem("Task list", JSON.stringify(taskListArray));
-    localStorage.setItem("Completed task", JSON.stringify(completeTaskList));
-    showListOfTasks();
-    showCompletedTask();
-}
+  deleteAllTask();
+  showListOfTasks();
+  showCompletedTask();
+};
 
+function deleteAllTask() {
+  taskListArray = [];
+  completeTaskList = [];
+  localStorage.setItem("Task list", JSON.stringify(taskListArray));
+  localStorage.setItem("Completed task", JSON.stringify(completeTaskList));
+}
