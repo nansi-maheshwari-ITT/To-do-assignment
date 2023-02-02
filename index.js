@@ -7,12 +7,12 @@ const pendingTask = document.querySelector(".footer span");
 const updateButtton = document.querySelector(".save-button");
 let taskListArray = JSON.parse(localStorage.getItem("Task list"));
 let completeTaskList = JSON.parse(localStorage.getItem("Completed task"));
-let updateIndex;
 let Task;
-inputBox.onkeyup=buttonTransition;
-addButton.onclick=addTask;
+let updateIndex;
+inputBox.onkeyup = buttonTransition;
+addButton.onclick = addTask;
 updateButtton.onclick = updateTaskListArray;
- 
+
 function buttonTransition() {
   Task = inputBox.value;
   if (Task.trim() != 0) {
@@ -26,7 +26,7 @@ function addTask() {
   showListOfTasks();
   buttonTransition();
 }
-function addToTaskListArray(){
+function addToTaskListArray() {
   taskListArray.push(Task);
   localStorage.setItem("Task list", JSON.stringify(taskListArray));
 }
@@ -63,22 +63,22 @@ function deleteAllButtonTransition() {
 
 function editTask(index) {
   updateButttonTransition();
- updateIndex = index;
+  updateIndex = index;
   inputBox.value = taskListArray[index];
 }
 
-function updateButttonTransition(){
+function updateButttonTransition() {
   addButton.style.display = "none";
   updateButtton.style.display = "block";
 }
 
-function updateTaskListArray(){
+function updateTaskListArray() {
   addButtonTransition();
   taskListArray[updateIndex] = inputBox.value;
   localStorage.setItem("Task list", JSON.stringify(taskListArray));
   showListOfTasks();
 }
-function addButtonTransition(){
+function addButtonTransition() {
   addButton.style.display = "block";
   addButton.classList.remove("active");
   updateButtton.style.display = "none";
