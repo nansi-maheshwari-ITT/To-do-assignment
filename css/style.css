@@ -163,7 +163,7 @@ ul {
 }
 
 @media screen and (max-width: 540px) {
-  .Main-box {
+  .main-box {
     max-width: 300px;
   }
   .to-do-list li .element-container {
